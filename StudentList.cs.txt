@@ -1,0 +1,140 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Cse111Task1
+{
+
+    // Name: Omar Sameh Fahim
+    //  ID : 225102600
+
+
+
+    class StudentList
+        {
+            public Student? First;
+            public Student? Last;
+            public int Count;
+
+            public StudentList()
+            {
+                First = null;
+                Last = null;
+                Count = 0;
+            }
+
+            public void AddFront(int id)
+            {
+                Student newStudent = new Student(id);
+
+                if (First == null)
+                {
+                    First = newStudent;
+                    Last = newStudent;
+                }
+                else
+                {
+                    newStudent.Next = First;
+                    First = newStudent;
+                }
+
+                Count++;
+            }
+
+            public void AddEnd(int id)
+            {
+                Student newStudent = new Student(id);
+
+                if (First == null)
+                {
+                    First = newStudent;
+                    Last = newStudent;
+                }
+                else
+                {
+                    Last!.Next = newStudent;
+                    Last = newStudent;
+                }
+
+                Count++;
+            }
+
+            public bool Remove(int id)
+            {
+                if (First == null)
+                    return false;
+
+                if (First.Id == id)
+                {
+                    First = First.Next;
+                    Count--;
+
+                    if (First == null)
+                        Last = null;
+
+                    return true;
+                }
+
+                Student previous = First;
+                Student? current = First.Next;
+
+                while (current != null && current.Id != id)
+                {
+                    previous = current;
+                    current = current.Next;
+                }
+
+                if (current == null)
+                    return false;
+
+                previous.Next = current.Next;
+
+                if (current == Last)
+                    Last = previous;
+
+                Count--;
+
+                return true;
+            }
+
+            public void Reverse()
+            {
+                Student? previous = null;
+                Student? current = First;
+                Student? next = null;
+
+                Last = First;
+
+                while (current != null)
+                {
+                    next = current.Next;
+                    current.Next = previous;
+
+                    previous = current;
+                    current = next;
+                }
+
+                First = previous;
+            }
+
+            public void Print()
+            {
+                Student? current = First;
+
+                while (current != null)
+                {
+                    Console.Write(current.Id);
+
+                    if (current.Next != null)
+                        Console.Write(" ");
+
+                    current = current.Next;
+                }
+
+                Console.WriteLine();
+            }
+        }
+    
+}
